@@ -21,7 +21,8 @@
     "format:check": "prettier --check .",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,8 @@
   },
   "homepage": "https://github.com/PacMan2084/acquisitions#readme",
   "dependencies": {
+    "@arcjet/inspect": "^1.0.0-beta.15",
+    "@arcjet/node": "^1.0.0-beta.15",
     "@neondatabase/serverless": "^1.0.2",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
@@ -51,10 +54,12 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@jest/globals": "^30.2.0",
     "drizzle-kit": "^0.31.8",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "jest": "^30.2.0",
     "prettier": "^3.7.4"
   }
 }
