@@ -15,6 +15,7 @@
   },
   "scripts": {
     "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -22,6 +23,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
+    "dev:docker": "sh ./scripts/dev.sh",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "repository": {
@@ -49,6 +51,7 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.1",
+    "postgres": "^3.4.7",
     "winston": "^3.19.0",
     "zod": "^4.2.1"
   },

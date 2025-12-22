@@ -1,0 +1,51 @@
+services:
+  # PostgreSQL for local development
+  postgres:
+    image: postgres:16-alpine
+    container_name: acquisitions-postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: acquisitions
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d acquisitions']
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    networks:
+      - acquisitions-dev
+
+  # Node.js application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: acquisitions-app-dev
+    ports:
+      - '${PORT:-3000}:3000'
+    env_file:
+      - .env.development
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/acquisitions
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - acquisitions-dev
+    restart: unless-stopped
+
+networks:
+  acquisitions-dev:
+    driver: bridge
+
+volumes:
+  postgres_data:
