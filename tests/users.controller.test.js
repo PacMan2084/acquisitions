@@ -186,7 +186,29 @@ describe('Users Controller', () => {
     expect(next).not.toHaveBeenCalled();
   });
 
-  it('8. deleteUser should allow a user to delete their own account', async () => {
+  it('8. updateUser should allow an admin user to update the role of any user', async () => {
+    const req = {
+      params: { id: '2' },
+      body: { role: 'admin' },
+      user: { id: 1, role: 'admin' },
+    };
+    const res = createMockRes();
+    const next = jest.fn();
+
+    const updated = { id: 2, name: 'User Two', email: 'two@example.com', role: 'admin' };
+    mockUpdateUser.mockResolvedValue(updated);
+
+    await updateUser(req, res, next);
+
+    expect(mockUpdateUser).toHaveBeenCalledWith(2, { role: 'admin' });
+    expect(res.json).toHaveBeenCalledWith({
+      message: 'User updated successfully.',
+      user: updated,
+    });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('9. deleteUser should allow a user to delete their own account', async () => {
     const req = {
       params: { id: '1' },
       user: { id: 1, role: 'user' },
